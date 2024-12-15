@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 function App() {
   const [movies, setMovies] = useState([]); // State to store movie data
@@ -32,11 +33,11 @@ function App() {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Movie added successfully!');
+        Swal.fire('Success', 'Movie added successfully!', 'success');
         setNewMovie({ name: '', year: '', rating: '' }); // Reset form
-        setMovies((prevMovies) => [...prevMovies, newMovie]); // Add new movie to state
+        setMovies((prevMovies) => [...prevMovies, { ...newMovie, _id: data.id }]); // Add new movie to state
       } else {
-        alert(`Error: ${data.error}`);
+        Swal.fire(`Error: ${data.error}`);
       }
     } catch (err) {
       console.error('Error submitting movie:', err);
@@ -55,10 +56,10 @@ function App() {
       });
 
       if (response.ok) {
-        alert('Movie deleted successfully!');
+        Swal.fire('Movie deleted successfully!');
         setMovies((prevMovies) => prevMovies.filter((movie) => movie._id !== id)); // Remove movie from state
       } else {
-        alert('Failed to delete movie.');
+        Swal.fire('Failed to delete movie.');
       }
     } catch (err) {
       console.error('Error deleting movie:', err);
@@ -66,13 +67,13 @@ function App() {
   };
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-gray-800 text-white min-h-screen p-4 flex flex-col lg:flex-row items-start justify-center lg:space-x-8">
+    <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white min-h-screen p-6 flex flex-col lg:flex-row items-start justify-center lg:space-x-10">
       {/* Form to add a new movie */}
-      <div className="w-full lg:w-1/3 bg-gray-700 p-4 rounded-lg shadow-md">
-        <h1 className="text-xl font-semibold mb-4 text-center text-cyan-400">🎬 Add Movie</h1>
-        <form onSubmit={handleSubmit} className="space-y-3">
+      <div className="w-full lg:w-1/3 bg-gray-800 p-6 rounded-xl shadow-lg transform transition-transform hover:scale-105">
+        <h1 className="text-2xl font-bold mb-6 text-center text-cyan-400">🎬 Add Movie</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-xs font-medium text-gray-300 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
               Movie Name
             </label>
             <input
@@ -83,11 +84,11 @@ function App() {
               value={newMovie.name}
               onChange={handleInputChange}
               required
-              className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600 text-sm focus:outline-none focus:ring-1 focus:ring-cyan-500"
+              className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
           </div>
           <div>
-            <label htmlFor="year" className="block text-xs font-medium text-gray-300 mb-1">
+            <label htmlFor="year" className="block text-sm font-medium text-gray-300 mb-2">
               Year
             </label>
             <input
@@ -98,11 +99,11 @@ function App() {
               value={newMovie.year}
               onChange={handleInputChange}
               required
-              className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600 text-sm focus:outline-none focus:ring-1 focus:ring-cyan-500"
+              className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
           </div>
           <div>
-            <label htmlFor="rating" className="block text-xs font-medium text-gray-300 mb-1">
+            <label htmlFor="rating" className="block text-sm font-medium text-gray-300 mb-2">
               Rating
             </label>
             <input
@@ -116,12 +117,12 @@ function App() {
               min="0"
               max="10"
               required
-              className="w-full p-2 rounded bg-gray-800 text-white border border-gray-600 text-sm focus:outline-none focus:ring-1 focus:ring-cyan-500"
+              className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 rounded focus:outline-none focus:ring-1 focus:ring-cyan-300 text-sm"
+            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-3 rounded-lg text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-300"
           >
             Add Movie
           </button>
@@ -130,21 +131,21 @@ function App() {
 
       {/* Display list of movies */}
       <div className="w-full lg:w-2/3">
-        <h1 className="text-xl font-semibold mb-4 text-center text-cyan-400">🎥 Movie List</h1>
-        <ul className="space-y-3">
+        <h1 className="text-2xl font-bold mb-6 text-center text-cyan-400">🎥 Movie List</h1>
+        <ul className="space-y-4">
           {movies.map((movie) => (
             <li
               key={movie._id}
-              className="bg-gray-800 p-3 rounded shadow flex items-center justify-between"
+              className="bg-gray-800 p-5 rounded-lg shadow-lg flex items-center justify-between transition-transform hover:scale-105"
             >
               <div>
-                <h3 className="text-sm font-medium text-cyan-400">{movie.name}</h3>
-                <p className="text-gray-400 text-xs">Year: {movie.year}</p>
-                <p className="text-gray-400 text-xs">Rating: {movie.rating}</p>
+                <h3 className="text-lg font-semibold text-cyan-400">{movie.name}</h3>
+                <p className="text-gray-400 text-sm">Year: {movie.year}</p>
+                <p className="text-gray-400 text-sm">Rating: {movie.rating}</p>
               </div>
               <button
                 onClick={() => handleDelete(movie._id)}
-                className="bg-red-500 hover:bg-red-600 text-white font-medium py-1 px-3 rounded text-xs focus:outline-none focus:ring-1 focus:ring-red-300"
+                className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-red-300"
               >
                 Delete
               </button>
