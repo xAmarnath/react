@@ -25,6 +25,8 @@ MongoClient.connect(MONGO_URI)
         // Connect to the specific database
         db = client.db(DB_NAME);
         console.log('Connected to MongoDB');
+        console.log('Now run the frontend part of the application');
+        console.log('Type npm start in the terminal');
     })
     .catch(err => console.error('MongoDB connection error:', err));
 
