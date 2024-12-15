@@ -1,12 +1,12 @@
 {
-    "rewrites": [
+    "routes": [
         {
-            "source": "/movies",
-            "destination": "/api/movies"
+            "src": "/api/(.*)",
+            "dest": "api/main.js"
         },
         {
-            "source": "/movies/stream",
-            "destination": "/api/movies/stream"
+            "src": "/(.*)",
+            "dest": "mov/$1"
         }
     ]
 }
