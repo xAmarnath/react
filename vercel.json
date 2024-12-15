@@ -1,8 +1,12 @@
 {
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "/api"
+            "source": "/movies",
+            "destination": "/api/movies"
+        },
+        {
+            "source": "/movies/stream",
+            "destination": "/api/movies/stream"
         }
     ]
 }

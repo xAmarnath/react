@@ -85,6 +85,6 @@ app.get('/api/movies/stream', async (req, res) => {
 
 // Start the server
 // The app listens for incoming requests on the specified port
-app.listen(process.env.PORT || 8081, () => {
+app.listen(3000 || process.env.PORT || 8081, () => {
     console.log(`Server running on http://localhost:${process.env.PORT || 8081}`);
 });
