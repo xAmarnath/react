@@ -56,7 +56,7 @@ function App() {
       });
 
       if (response.ok) {
-        Swal.fire('Movie deleted successfully!');
+        Swal.fire('Movie deleted successfully! 🎉', '', 'success');
         setMovies((prevMovies) => prevMovies.filter((movie) => movie._id !== id)); // Remove movie from state
       } else {
         Swal.fire('Failed to delete movie.');
