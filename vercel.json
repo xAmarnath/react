@@ -4,6 +4,7 @@
             "src": "/api/(.*)",
             "dest": "api/main.js"
         },
+        
         {
             "src": "/(.*)",
             "dest": "/$1"
