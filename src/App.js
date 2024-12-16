@@ -147,7 +147,7 @@ function App() {
                 onClick={() => handleDelete(movie._id)}
                 className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-red-300"
               >
-                Delete
+                Delete  
               </button>
             </li>
           ))}
